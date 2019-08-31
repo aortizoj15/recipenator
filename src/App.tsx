@@ -6,13 +6,13 @@ require('dotenv').config();
 const App: React.FC = () => {
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState("");
-  const [query, setQuery] = useState("chicken")
+  const [query, setQuery] = useState("tacos");
 
   useEffect(() => {
     const getRecipes = async () => {
       const appId = process.env.APP_ID;
       const appKey = process.env.APP_KEY;
-      const response = await fetch(`https://api.edamam.com/search?q=${query}&app_id=${appId}&app_key=${appKey}&from=0&to=3&calories=591-722&health=alcohol-free`);
+      const response = await fetch(`https://api.edamam.com/search?q=${query}&app_id=${appId}&app_key=${appKey}&from=0&to=10&calories=591-722&health=alcohol-free`);
       const data = await response.json();
       setRecipes(data.hits);
     }
@@ -31,8 +31,11 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
+      <h1 className="main-title">Recipenator</h1>
       <form className="search-form" onSubmit={getSearch}>
-        <input className="search-bar" type="text" value={search}onChange={handleSearchChange}/>
+        <label htmlFor="search-input">Ingredient:{' '}
+          <input id="search-input" className="search-bar" type="text" value={search} onChange={handleSearchChange} placeholder="ex. banana"/>
+        </label>
         <button className="search-button">Search</button>
       </form>
       <div className="recipes">
